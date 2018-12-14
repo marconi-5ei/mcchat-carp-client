@@ -1,4 +1,4 @@
-package frontend;
+package frontend.GUI;
 
 public class Message {
     public String message;
@@ -11,6 +11,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return message;
+        return String.format("%s: %s", this.username, this.message);
     }
 }
