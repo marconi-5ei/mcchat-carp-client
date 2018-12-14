@@ -1,14 +1,10 @@
 package frontend;
 
-import backend.Client;
 import backend.packets.MsgPacket;
 import backend.packets.TlPacket;
 
 import javax.swing.*;
-import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 public class Controller {
     public DefaultListModel<Topic> topicsModel;

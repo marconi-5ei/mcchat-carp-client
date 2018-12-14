@@ -3,15 +3,9 @@ package backend;
 import backend.packets.*;
 import frontend.App;
 import frontend.Controller;
-import frontend.Message;
-import frontend.Topic;
 
 import java.io.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client extends Thread {
     private DataOutputStream os;
@@ -35,10 +29,10 @@ public class Client extends Thread {
         try {
             new Handler(client, controller).start();
 
-            new TlrqPacket().send(os);
+            new SubPacket("dio non e' bello").send(os);
             currentThread().sleep(250);
 
-            new SubPacket("dio non e' bello").send(os);
+            new MsgPacket("dio non e' bello", "io", "\uD83D\uDCA9").send(os);
             currentThread().sleep(250);
 
             new TlrqPacket().send(os);
@@ -50,7 +44,7 @@ public class Client extends Thread {
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException, NoSuchMethodException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Controller controller = new Controller();
 
         Client client = new Client(controller);

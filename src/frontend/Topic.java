@@ -2,7 +2,6 @@ package frontend;
 
 import javax.swing.*;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 public class Topic {
     public String topicName;

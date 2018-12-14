@@ -1,7 +1,5 @@
 package backend.packets;
 
-import java.util.Arrays;
-
 public class MsgPacket extends BasePacket {
     public final String topic;
     public final String username;

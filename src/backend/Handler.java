@@ -2,17 +2,13 @@ package backend;
 
 import backend.packets.InfoPacket;
 import backend.packets.MsgPacket;
-import backend.packets.SubPacket;
 import backend.packets.TlPacket;
 import frontend.Controller;
-import frontend.Topic;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
 
 public class Handler extends Thread {
     private final DataInputStream is;

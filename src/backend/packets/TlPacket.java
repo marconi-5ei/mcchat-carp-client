@@ -1,9 +1,7 @@
 package backend.packets;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TlPacket extends BasePacket {
     public final String[] topics;

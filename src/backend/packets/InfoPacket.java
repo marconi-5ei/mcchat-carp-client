@@ -1,7 +1,5 @@
 package backend.packets;
 
-import java.io.DataOutputStream;
-
 public class InfoPacket extends BasePacket {
     public final byte version;
 
