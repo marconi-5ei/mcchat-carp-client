@@ -8,15 +8,18 @@ import frontend.Controller;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.security.InvalidParameterException;
 
 public class Handler extends Thread {
+    private final boolean DEBUG;
+
     private final DataInputStream is;
     private final Controller controller;
 
-    public Handler(Socket client, Controller controller) throws IOException {
-        this.is = new DataInputStream(client.getInputStream());
+    public Handler(DataInputStream is, Controller controller) {
+        this.is = is;
         this.controller = controller;
+        this.DEBUG = true;
     }
 
     @Override
@@ -45,8 +48,13 @@ public class Handler extends Thread {
                         byte[] msgPayload = msgBuffer.toByteArray();
                         MsgPacket msg = MsgPacket.parseRaw(msgPayload);
 
-                        System.out.println(msg);
-                        controller.addMessage(msg);
+                        if (DEBUG) System.out.println(msg);
+                        try {
+                            controller.addMessage(msg);
+                        } catch (InvalidParameterException e) {
+                            System.err.println(String.format("Topic %s not recognized", msg.topic));
+                        }
+
                         break;
 
                     case 5:
@@ -60,7 +68,7 @@ public class Handler extends Thread {
                         byte[] tlPayload = tlBuffer.toByteArray();
                         TlPacket topics = TlPacket.parseRaw(tlPayload);
 
-                        System.out.println(topics);
+                        if (DEBUG) System.out.println(topics);
                         controller.addTopics(topics);
 
                         break;
