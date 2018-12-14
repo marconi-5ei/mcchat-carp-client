@@ -1,4 +1,4 @@
-package frontend;
+package frontend.GUI;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -17,16 +17,7 @@ public class Topic {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (((Topic) obj).topicName == this.topicName)
-            return true;
-        return false;
-    }
-
-    @Override
     public String toString() {
         return topicName;
     }
 }
-
-
