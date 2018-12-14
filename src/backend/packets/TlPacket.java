@@ -14,7 +14,7 @@ public class TlPacket extends BasePacket {
     }
 
     public static TlPacket parseRaw(byte[] raw) {
-        String[] payload = new String(raw, 0, raw.length - 2).split("\0");
+        String[] payload = (raw.length > 2) ? new String(raw, 0, raw.length - 2).split("\0") : new String[] {};
         return new TlPacket(payload);
     }
 
