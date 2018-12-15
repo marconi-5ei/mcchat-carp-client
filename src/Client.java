@@ -1,5 +1,4 @@
 import backend.Handler;
-import backend.packets.*;
 import frontend.GUI.App;
 import frontend.Controller;
 
@@ -21,9 +20,6 @@ public class Client {
 
         new App(controller);
         new Handler(is, controller).start();
-
-        Thread.sleep(10);
-        new TlrqPacket().send(os);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

@@ -1,6 +1,10 @@
+//TODO: Set username
+
 package frontend.GUI;
 
 import backend.packets.MsgPacket;
+import backend.packets.SubPacket;
+import backend.packets.TlrqPacket;
 import frontend.Controller;
 
 import javax.swing.*;
@@ -10,8 +14,10 @@ import java.io.IOException;
 public class App {
     public Controller controller;
 
-    public App(Controller controller) {
+    public App(Controller controller) throws IOException {
         this.controller = controller;
+
+        new TlrqPacket().send(controller.os);
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -25,9 +31,14 @@ public class App {
 
         JList<Topic> topicJList = new JList<Topic>();
         JList<Message> messageJList = new JList<Message>();
-        JTextField inputMessage = new JTextField();
+        JTextField textInputMessage = new JTextField();
+        JButton createTopic = new JButton();
+        JButton refreshTopicList = new JButton();
 
-        inputMessage.setEnabled(false);
+        createTopic.setText("Create new Topic");
+        refreshTopicList.setText("Refresh topics list");
+
+        textInputMessage.setEnabled(false);
         messageJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         topicJList.setModel(controller.topicsModel);
@@ -37,13 +48,13 @@ public class App {
                     messageJList.setModel(new DefaultListModel<Message>());
                 else
                     messageJList.setModel(topicJList.getSelectedValue().messagesModel);
-                inputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
+                textInputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
             }
         });
 
-        inputMessage.addActionListener((e) -> {
-            String text = inputMessage.getText();
-            inputMessage.setText("");
+        textInputMessage.addActionListener((e) -> {
+            String text = textInputMessage.getText();
+            textInputMessage.setText("");
             try {
                 new MsgPacket(topicJList.getSelectedValue().topicName, "UserName", text).send(controller.os);
             } catch (IOException e1) {
@@ -51,10 +62,29 @@ public class App {
             }
         });
 
-        jPanelTopics.add(topicJList, BorderLayout.WEST);
+        createTopic.addActionListener((e) -> {
+            String topic = JOptionPane.showInputDialog(jFrame, "Insert topic name");
+            try {
+                new SubPacket(topic).send(controller.os);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        refreshTopicList.addActionListener((e) -> {
+            try {
+                new TlrqPacket().send(controller.os);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        jPanelTopics.add(createTopic, BorderLayout.PAGE_START);
+        jPanelTopics.add(topicJList, BorderLayout.CENTER);
+        jPanelTopics.add(refreshTopicList, BorderLayout.PAGE_END);
 
         jPanelChat.add(messageJList, BorderLayout.PAGE_START);
-        jPanelChat.add(inputMessage, BorderLayout.PAGE_END);
+        jPanelChat.add(textInputMessage, BorderLayout.PAGE_END);
 
         jPanelContainer.add(jPanelTopics, BorderLayout.WEST);
         jPanelContainer.add(jPanelChat, BorderLayout.CENTER);
