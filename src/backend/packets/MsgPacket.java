@@ -6,7 +6,7 @@ public class MsgPacket extends BasePacket {
     public final String message;
 
     public MsgPacket(String topic, String username, String message) {
-        super((byte) 3, new String(topic + "\0" + username + "\0" + message + "\0").getBytes());
+        super((byte) 3, (topic + "\0" + username + "\0" + message + "\0").getBytes());
         this.topic = topic;
         this.username = username;
         this.message = message;
