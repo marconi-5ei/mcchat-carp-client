@@ -21,7 +21,7 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args.length == 0 || args[0].equals("help")) {
+        if (args.length < 2 || args[0].equals("help")) {
             System.out.println("Run java -jar mcchat-carp-client.jar <server-ip> <username>");
         } else {
             new Client(args[0], args[1]);
