@@ -100,7 +100,7 @@ public class App {
         jFrame.getContentPane().add(jPanelContainer);
 
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(new Dimension(300, 400));
+        jFrame.setSize(new Dimension(600, 400));
         jFrame.setVisible(true);
     }
 }
