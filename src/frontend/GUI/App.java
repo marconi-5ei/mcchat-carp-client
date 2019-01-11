@@ -50,6 +50,11 @@ public class App {
                     messageJList.setModel(new DefaultListModel<Message>());
                 else
                     messageJList.setModel(topicJList.getSelectedValue().messagesModel);
+                try {
+                    new SubPacket(topicJList.getSelectedValue().topicName).send(controller.os);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
                 textInputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
             }
         });
@@ -68,6 +73,7 @@ public class App {
             String topic = JOptionPane.showInputDialog(jFrame, "Insert topic name");
             try {
                 new SubPacket(topic).send(controller.os);
+                new TlrqPacket().send(controller.os);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -85,7 +91,7 @@ public class App {
         jPanelTopics.add(topicJList, BorderLayout.CENTER);
         jPanelTopics.add(refreshTopicList, BorderLayout.PAGE_END);
 
-        jPanelChat.add(messageJList, BorderLayout.PAGE_START);
+        jPanelChat.add(new JScrollPane(messageJList), BorderLayout.CENTER);
         jPanelChat.add(textInputMessage, BorderLayout.PAGE_END);
 
         jPanelContainer.add(jPanelTopics, BorderLayout.WEST);
