@@ -2,6 +2,7 @@ import backend.Handler;
 import frontend.GUI.App;
 import frontend.Controller;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -9,7 +10,16 @@ import java.net.Socket;
 public class Client {
     private Socket clientSocket;
 
-    public Client(String server, String username) throws IOException {
+    public Client() throws IOException {
+        Object[] login = {
+                "Server ip address:", new JTextField(),
+                "Username: ", new JTextField()
+        };
+        JOptionPane.showConfirmDialog(null, login, "Login", JOptionPane.DEFAULT_OPTION);
+
+        String server = ((JTextField) login[1]).getText();
+        String username = ((JTextField) login[3]).getText();
+
         this.clientSocket = new Socket(InetAddress.getByName(server), 1502);
         DataOutputStream os = new DataOutputStream(this.clientSocket.getOutputStream());
         DataInputStream is = new DataInputStream(this.clientSocket.getInputStream());
@@ -21,10 +31,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args.length < 2 || args[0].equals("help")) {
-            System.out.println("Run java -jar mcchat-carp-client.jar <server-ip> <username>");
-        } else {
-            new Client(args[0], args[1]);
-        }
+        new Client();
     }
 }
