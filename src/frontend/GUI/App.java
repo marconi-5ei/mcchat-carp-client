@@ -13,9 +13,11 @@ import java.io.IOException;
 
 public class App {
     public Controller controller;
+    public String username;
 
-    public App(Controller controller) throws IOException {
+    public App(Controller controller, String username) throws IOException {
         this.controller = controller;
+        this.username = username;
 
         new TlrqPacket().send(controller.os);
 
@@ -56,7 +58,7 @@ public class App {
             String text = textInputMessage.getText();
             textInputMessage.setText("");
             try {
-                new MsgPacket(topicJList.getSelectedValue().topicName, "UserName", text).send(controller.os);
+                new MsgPacket(topicJList.getSelectedValue().topicName, this.username, text).send(controller.os);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
