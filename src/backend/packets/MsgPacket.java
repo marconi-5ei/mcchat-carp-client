@@ -14,7 +14,10 @@ public class MsgPacket extends BasePacket {
 
     public static MsgPacket parseRaw(byte[] raw) {
         String[] payload = new String(raw, 0, raw.length - 1).split("\0");
-        return new MsgPacket(payload[0], payload[1], payload[2]);
+        if (payload.length < 3)
+            return new MsgPacket(payload[0], payload[1], "");
+        else
+            return new MsgPacket(payload[0], payload[1], payload[2]);
     }
 
     @Override
