@@ -1,7 +1,6 @@
 package frontend.GUI;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 public class Topic {
     public String topicName;
@@ -13,7 +12,8 @@ public class Topic {
     }
 
     public void addMessages(Message... messages) {
-        messagesModel.addAll(Arrays.asList(messages));
+        for (Message message : messages)
+            messagesModel.addElement(message);
     }
 
     @Override
