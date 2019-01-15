@@ -20,7 +20,13 @@ public class Client {
         String server = ((JTextField) login[1]).getText();
         String username = ((JTextField) login[3]).getText();
 
-        this.clientSocket = new Socket(InetAddress.getByName(server), 1502);
+        try {
+            this.clientSocket = new Socket(InetAddress.getByName(server), 1502);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Couldn't connect to server.");
+            System.exit(1);
+        }
+
         DataOutputStream os = new DataOutputStream(this.clientSocket.getOutputStream());
         DataInputStream is = new DataInputStream(this.clientSocket.getInputStream());
 
