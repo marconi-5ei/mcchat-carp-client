@@ -5,10 +5,12 @@ import javax.swing.*;
 public class Topic {
     public String topicName;
     public DefaultListModel<Message> messagesModel;
+    public boolean subscribed;
 
     public Topic(String topicName) {
         this.topicName = topicName;
         this.messagesModel= new DefaultListModel<Message>();
+        this.subscribed = false;
     }
 
     public void addMessages(Message... messages) {
@@ -18,6 +20,6 @@ public class Topic {
 
     @Override
     public String toString() {
-        return topicName;
+        return (this.subscribed) ? this.topicName + " (S)": this.topicName;
     }
 }

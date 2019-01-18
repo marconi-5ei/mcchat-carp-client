@@ -1,5 +1,3 @@
-//TODO: Set username
-
 package frontend.GUI;
 
 import backend.packets.MsgPacket;
@@ -9,7 +7,6 @@ import frontend.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class App {
     public Controller controller;
@@ -46,12 +43,16 @@ public class App {
         topicJList.setModel(controller.topicsModel);
         topicJList.addListSelectionListener((e) -> {
             if (!e.getValueIsAdjusting()) {
-                if (topicJList.isSelectionEmpty())
+                if (topicJList.isSelectionEmpty()) {
                     messageJList.setModel(new DefaultListModel<Message>());
-                else
+                } else {
                     messageJList.setModel(topicJList.getSelectedValue().messagesModel);
-                    new SubPacket(topicJList.getSelectedValue().topicName).send(controller.os);
-                textInputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
+                    if (!topicJList.getSelectedValue().subscribed) {
+                        new SubPacket(topicJList.getSelectedValue().topicName).send(controller.os);
+                        topicJList.getSelectedValue().subscribed = true;
+                    }
+                    textInputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
+                }
             }
         });
 
