@@ -20,6 +20,6 @@ public class Topic {
 
     @Override
     public String toString() {
-        return (this.subscribed) ? this.topicName + " (S)": this.topicName;
+        return String.format("%.20s", (this.subscribed) ? this.topicName + " (S)": this.topicName);
     }
 }
