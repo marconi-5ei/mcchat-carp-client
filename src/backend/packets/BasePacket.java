@@ -12,9 +12,13 @@ public abstract class BasePacket {
         this.raw = raw;
     }
 
-    public void send(DataOutputStream os) throws IOException {
-        os.write(opcode);
-        os.write(raw);
-        os.flush();
+    public void send(DataOutputStream os) {
+        try {
+            os.write(opcode);
+            os.write(raw);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

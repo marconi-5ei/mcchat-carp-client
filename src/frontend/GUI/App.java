@@ -15,7 +15,7 @@ public class App {
     public Controller controller;
     public String username;
 
-    public App(Controller controller, String username) throws IOException {
+    public App(Controller controller, String username) {
         this.controller = controller;
         this.username = username;
 
@@ -50,11 +50,7 @@ public class App {
                     messageJList.setModel(new DefaultListModel<Message>());
                 else
                     messageJList.setModel(topicJList.getSelectedValue().messagesModel);
-                try {
                     new SubPacket(topicJList.getSelectedValue().topicName).send(controller.os);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
                 textInputMessage.setEnabled(!(topicJList.isSelectionEmpty()));
             }
         });
@@ -62,29 +58,17 @@ public class App {
         textInputMessage.addActionListener((e) -> {
             String text = textInputMessage.getText();
             textInputMessage.setText("");
-            try {
-                new MsgPacket(topicJList.getSelectedValue().topicName, this.username, text).send(controller.os);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            new MsgPacket(topicJList.getSelectedValue().topicName, this.username, text).send(controller.os);
         });
 
         createTopic.addActionListener((e) -> {
             String topic = JOptionPane.showInputDialog(jFrame, "Insert topic name");
-            try {
-                new SubPacket(topic).send(controller.os);
-                new TlrqPacket().send(controller.os);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            new SubPacket(topic).send(controller.os);
+            new TlrqPacket().send(controller.os);
         });
 
         refreshTopicList.addActionListener((e) -> {
-            try {
-                new TlrqPacket().send(controller.os);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            new TlrqPacket().send(controller.os);
         });
 
         jPanelTopics.add(createTopic, BorderLayout.PAGE_START);
