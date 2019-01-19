@@ -1,5 +1,6 @@
 package backend.packets;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 public class UnsubPacket extends BasePacket {
@@ -11,6 +12,6 @@ public class UnsubPacket extends BasePacket {
     }
 
     public static UnsubPacket parseRaw(byte[] raw) {
-        return new UnsubPacket(new String(Arrays.copyOfRange(raw, 0, raw.length - 1)));
+        return new UnsubPacket(new String(Arrays.copyOfRange(raw, 0, raw.length - 1), Charset.forName("UTF-8")));
     }
 }

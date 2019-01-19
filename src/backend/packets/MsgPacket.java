@@ -1,5 +1,7 @@
 package backend.packets;
 
+import java.nio.charset.Charset;
+
 public class MsgPacket extends BasePacket {
     public final String topic;
     public final String username;
@@ -13,7 +15,7 @@ public class MsgPacket extends BasePacket {
     }
 
     public static MsgPacket parseRaw(byte[] raw) {
-        String[] payload = new String(raw, 0, raw.length - 1).split("\0");
+        String[] payload = new String(raw, 0, raw.length - 1, Charset.forName("UTF-8")).split("\0");
         if (payload.length < 3)
             return new MsgPacket(payload[0], payload[1], "");
         else
